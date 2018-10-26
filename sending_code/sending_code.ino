@@ -1,11 +1,12 @@
-
+#include<SoftwareSerial.h>
+SoftwareSerial bt(5,6);
 #include "I2Cdev.h"
 #include<Servo.h>
 #include "MPU6050_6Axis_MotionApps20.h"
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
     #include "Wire.h"
 #endif
-int movement = 0000;   // up-down-right-left
+char movement = 0;   // up-down-right-left
 MPU6050 mpu;
 #define OUTPUT_READABLE_YAWPITCHROLL
 #define INTERRUPT_PIN 2  // use pin 2 on Arduino Uno & most boards
@@ -50,13 +51,15 @@ void setup() {
     myservo1.write(90);
     myservo2.write(90);
     myservo3.write(90);
+    pinMode(5,INPUT);
+    pinMode(6,OUTPUT);
     #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
         Wire.begin();
         Wire.setClock(400000); // 400kHz I2C clock. Comment this line if having compilation difficulties
     #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
         Fastwire::setup(400, true);
     #endif
-    Serial.begin(115200);
+    Serial.begin(38400);
     while (!Serial); 
     Serial.println(F("Initializing I2C devices..."));
     mpu.initialize();
@@ -162,7 +165,7 @@ void loop() {
         fifoCount -= packetSize;
 
        
-        if (time>20000 && time<20100 )
+        if (time>5000 && time<5100 )
         {
           store1 =round(ypr[0] * 180/M_PI);
           store2 =round(ypr[1] * 180/M_PI);
@@ -192,35 +195,35 @@ void loop() {
             Serial.println(round(ypr[2] * 180/M_PI));
         #endif
 
-        if(time>20100){
+        if(time>5100){
             k1=round(ypr[0] * 180/M_PI) - store1;
             k2=round(ypr[1] * 180/M_PI) - store2;
             k3=round(ypr[2] * 180/M_PI) - store3;
             
               if(k2<=15  && k2>=-15 && k3<=15  && k3>=-15){
                 Serial.println("stop");
-                movement = 0000;
+                movement = '0';
               }
               
               else if(k2>15 ){
                 Serial.println("forward");
-                movement =  1000;
+                movement =  '1';
               }
               
               else if( k2<-15){
                 Serial.println("backward");
-                movement = 0100;
+                movement ='2';
               }
               
               else if(k3<15){
                Serial.println("left");
-               movement = 0001;
+               movement = '3';
               }
               else if(k3>-15){
                 Serial.println("right");
-                movement = 0010;
+                movement = '4';
               }
-
+              Serial.write(movement);
         }
 //        mpu.resetFIFO();
 
