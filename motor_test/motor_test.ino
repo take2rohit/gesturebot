@@ -1,10 +1,11 @@
-#include<SoftwareSerial.h>
+#include<SoftwareSerial.h>                                                                                                                                               
 #define ledPin 13
 int state = 0;
-int lft_mtr_frnt = 2;
-int lft_mtr_bkwd = 3;
-int rght_mtr_frnt = 4;
-int rght_mtr_bkwd = 5;
+int lft_mtr_frnt = 8;
+int lft_mtr_bkwd = 9;
+int rght_mtr_frnt = 10;
+int rght_mtr_bkwd = 11;
+
 
 void setup() 
 {
@@ -19,7 +20,13 @@ pinMode(rght_mtr_bkwd,OUTPUT);
 //Serial.begin(38400);
 }
 
-void forw()
+
+void loop()
+{ 
+   right();
+}
+
+void back()
 {
   
     digitalWrite(lft_mtr_frnt, HIGH); // right
@@ -28,7 +35,7 @@ void forw()
     digitalWrite(rght_mtr_bkwd, LOW);
     Serial.println("FRwd");
 }
-void left()
+void right()
 {
     digitalWrite(lft_mtr_frnt, HIGH); // right
     digitalWrite(lft_mtr_bkwd, LOW); // left
@@ -37,7 +44,7 @@ void left()
     Serial.println("rgt");
 }  
 
-void right()
+void left()
 {
     digitalWrite(lft_mtr_frnt, LOW); // right
     digitalWrite(lft_mtr_bkwd, HIGH); // left
@@ -46,7 +53,7 @@ void right()
     Serial.println("lft");
 }
 
-void bkwd()
+void forw()
 {
     digitalWrite(lft_mtr_frnt, LOW); // right
     digitalWrite(lft_mtr_bkwd, HIGH); // left
@@ -62,32 +69,4 @@ void stopp()
     digitalWrite(rght_mtr_frnt, LOW);
     digitalWrite(rght_mtr_bkwd, LOW);
     Serial.println("stp");
-}
-
-
-void loop()
-{ 
-  if(Serial.available() > 0){ // Checks whether data is comming from the serial port
-    state = Serial.read(); // Reads the data from the serial port
- }
- if (state == '0') {
-  stopp(); // LED ON
-  state = 0;
- }
- else if (state == '1') {
-  forw(); // LED ON
-  state = 0;
- }
- else if (state == '2') {
-  bkwd(); // LED ON
-  state = 0;
- }
- else if (state == '3') {
-  right(); // LED ON
-  state = 0;
- }
- else if (state == '4') {
-  left(); // LED ON
-  state = 0;
- }
 }

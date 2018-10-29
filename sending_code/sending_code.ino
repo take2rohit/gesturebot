@@ -1,4 +1,8 @@
 #include<SoftwareSerial.h>
+int lft_mtr_frnt = 8;
+int lft_mtr_bkwd = 9;
+int rght_mtr_frnt = 10;
+int rght_mtr_bkwd = 11;
 SoftwareSerial bt(5,6);
 #include "I2Cdev.h"
 #include<Servo.h>
@@ -44,7 +48,12 @@ int store1,store2,store3,t1,t2,t3;
 
 void setup() {
     // join I2C bus (I2Cdev library doesn't do this automatically)
-    pinMode(13,OUTPUT);
+    pinMode(5,OUTPUT);
+    digitalWrite(5,LOW);
+    pinMode(lft_mtr_frnt,OUTPUT);
+pinMode(lft_mtr_bkwd,OUTPUT);
+pinMode(rght_mtr_frnt,OUTPUT);
+pinMode(rght_mtr_bkwd,OUTPUT);
     myservo1.attach(9);
     myservo2.attach(10);
     myservo3.attach(11);
@@ -59,7 +68,7 @@ void setup() {
     #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
         Fastwire::setup(400, true);
     #endif
-    Serial.begin(38400);
+    Serial.begin(115200);
     while (!Serial); 
     Serial.println(F("Initializing I2C devices..."));
     mpu.initialize();
@@ -165,7 +174,7 @@ void loop() {
         fifoCount -= packetSize;
 
        
-        if (time>5000 && time<5100 )
+        if (time>20000 && time<21000 )
         {
           store1 =round(ypr[0] * 180/M_PI);
           store2 =round(ypr[1] * 180/M_PI);
@@ -195,38 +204,86 @@ void loop() {
             Serial.println(round(ypr[2] * 180/M_PI));
         #endif
 
-        if(time>5100){
+        if(time>21000){
             k1=round(ypr[0] * 180/M_PI) - store1;
             k2=round(ypr[1] * 180/M_PI) - store2;
             k3=round(ypr[2] * 180/M_PI) - store3;
             
-              if(k2<=15  && k2>=-15 && k3<=15  && k3>=-15){
+              if(k2<=25  && k2>=-25 && k3<=25  && k3>=-25){
                 Serial.println("stop");
+                stopp();
                 movement = '0';
               }
               
-              else if(k2>15 ){
+              else if(k2>25 ){
                 Serial.println("forward");
+                forw();
                 movement =  '1';
               }
               
-              else if( k2<-15){
+              else if( k2<-25){
                 Serial.println("backward");
+                back();
                 movement ='2';
               }
               
-              else if(k3<15){
+              else if(k3<25){
                Serial.println("left");
                movement = '3';
+               left();
               }
-              else if(k3>-15){
+              else if(k3>-25){
                 Serial.println("right");
                 movement = '4';
+                right();  
               }
               Serial.write(movement);
         }
-//        mpu.resetFIFO();
+    //   mpu.resetFIFO();
 
     }
 }
+void back()
+{
+  
+    digitalWrite(lft_mtr_frnt, HIGH); // right
+    digitalWrite(lft_mtr_bkwd, LOW); // left
+    digitalWrite(rght_mtr_frnt, HIGH); // left
+    digitalWrite(rght_mtr_bkwd, LOW);
+    Serial.println("FRwd");
+}
+void right()
+{
+    digitalWrite(lft_mtr_frnt, HIGH); // right
+    digitalWrite(lft_mtr_bkwd, LOW); // left
+    digitalWrite(rght_mtr_frnt, LOW); // left
+    digitalWrite(rght_mtr_bkwd, HIGH);
+    Serial.println("rgt");
+}  
 
+void left()
+{
+    digitalWrite(lft_mtr_frnt, LOW); // right
+    digitalWrite(lft_mtr_bkwd, HIGH); // left
+    digitalWrite(rght_mtr_frnt, HIGH); // left
+    digitalWrite(rght_mtr_bkwd, LOW);
+    Serial.println("lft");
+}
+
+void forw()
+{
+    digitalWrite(lft_mtr_frnt, LOW); // right
+    digitalWrite(lft_mtr_bkwd, HIGH); // left
+    digitalWrite(rght_mtr_frnt, LOW) ;// left
+    digitalWrite(rght_mtr_bkwd, HIGH);
+    Serial.println("bkwd");
+}
+
+void stopp()
+{
+    digitalWrite(lft_mtr_frnt, LOW);
+    digitalWrite(lft_mtr_bkwd, LOW);
+    digitalWrite(rght_mtr_frnt, LOW);
+    digitalWrite(rght_mtr_bkwd, LOW);
+    Serial.println("stp");
+}
