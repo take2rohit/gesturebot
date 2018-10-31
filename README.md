@@ -1,25 +1,58 @@
-Arduino-MPU6050
+Hand Gesture Controlled Bot
 ===============
 
-MPU6050 Triple Axis Gyroscope & Accelerometer Arduino Library.
+
 
 ![MPU6050 Processing](http://www.jarzebski.pl/media/zoom/publish/2014/10/mpu6050-processing-2.png "MPU6050 Processing")
 
-Tutorials: http://www.jarzebski.pl/arduino/czujniki-i-sensory/3-osiowy-zyroskop-i-akcelerometr-mpu6050.html
 
-This library use I2C to communicate, 2 pins are required to interface
+#Overview
+The hand gesture controlled bot is a bot which receives it commands by giving pitch and roll to hand. This is helpful for people on wheelchair who can't even move their fingers or hands.
 
-I need your help
-----------------
+#Aim
+To design a hand gesture control bot which moves as we change our hand gesture.
 
-July 31, 2017
+#Components
+Arduino, IMU Sensor(MPU6050), Motor Driver Module (L293D), BO Motor, Jumpers, Chassis, Battery, Breadboard, Wheels.
 
-In the near future I plan to refactoring the libraries. The main goal is to improve code quality, new features and add support for different versions of Arduino boards like Uno, Mega and Zero.
+#Applications: 
+1. These bots are very useful in many applications like remote surveillance, military etc.
+2. Hand gesture controlled robot can be used by physically challenged in wheelchairs.
+3. Hand gesture controlled industrial grade robotic arms can be developed.
 
-For this purpose I need to buy modules, Arduino Boards and lot of beer. 
+#Circuit Diagram
+![gesturebot_bb 1](https://user-images.githubusercontent.com/40535193/47768192-f419c900-dcfc-11e8-91c6-df5689163fbf.jpg)
 
-If you want to support the further and long-term development of libraries, please help.
+#Working of Circuit
+1. Calibration of IMU sensor using Library functions provided by Open Source Developers working on IMU sensors.
+2. Code was written for calculation of angles using Gyroscope sensor.
+3. Thresholding was done for the movement of the bot
+4. Connection were made robust using perfboard according to circuit diagram
+5. Code for movement of bot using differential drive mechanism was written
+6. H-bridge was used for Bi-directional movement of bot 
 
-You can do this by transferring any amount to my PayPal account: paypal@jarzebski.pl
+#Challenges Faced
 
-Thanks!
+1. Calibration of IMU Sensor
+2. Lesser accuracy of IMU sensors
+3. Master slave configuration of bluetooth module
+4. Poor connections
+5. No proper soldering
+6. Gimbal locking
+7. Shorting grounds of all devices
+
+
+#Video Link
+https://drive.google.com/file/d/1FxKM1XTJ2eXsQflOGg-hfRZL7C6VR18y/view?usp=sharing
+
+#References
+http://www.ti.com/product/L293D
+https://en.wikipedia.org/wiki/Inertial_measurement_unit
+https://www.arduino.cc/en/Main/Tutorials
+https://howtomechatronics.com/tutorials/arduino/how-to-configure-pair-two-hc-05-bluetooth-module-master-slave-commands/
+https://en.wikipedia.org/wiki/Aircraft_principal_axes
+https://en.wikipedia.org/wiki/Euler_angles
+
+#Team Members
+1. Rohit Lal
+2. Rishesh Agarwal
