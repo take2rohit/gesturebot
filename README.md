@@ -43,12 +43,12 @@ Arduino, IMU Sensor(MPU6050), Motor Driver Module (L293D), BO Motor, Jumpers, Ch
 https://drive.google.com/file/d/1FxKM1XTJ2eXsQflOGg-hfRZL7C6VR18y/view?usp=sharing
 
 # References
-http://www.ti.com/product/L293D
-https://en.wikipedia.org/wiki/Inertial_measurement_unit
-https://www.arduino.cc/en/Main/Tutorials
-https://howtomechatronics.com/tutorials/arduino/how-to-configure-pair-two-hc-05-bluetooth-module-master-slave-commands/
-https://en.wikipedia.org/wiki/Aircraft_principal_axes
-https://en.wikipedia.org/wiki/Euler_angles
+1. http://www.ti.com/product/L293D
+2. https://en.wikipedia.org/wiki/Inertial_measurement_unit
+3. https://www.arduino.cc/en/Main/Tutorials
+4. https://howtomechatronics.com/tutorials/arduino/how-to-configure-pair-two-hc-05-bluetooth-module-master-slave-commands/
+5. https://en.wikipedia.org/wiki/Aircraft_principal_axes
+6. https://en.wikipedia.org/wiki/Euler_angles
 
 # Team Members
 1. Rohit Lal
