@@ -36,6 +36,7 @@ Arduino, IMU Sensor(MPU6050), Motor Driver Module (L293D), BO Motor, Jumpers, Ch
 6. Gimbal locking
 7. Shorting grounds of all devices
 
+
 ![MPU6050 Processing](http://www.jarzebski.pl/media/zoom/publish/2014/10/mpu6050-processing-2.png "MPU6050 Processing")
 
 
