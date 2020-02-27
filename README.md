@@ -41,7 +41,7 @@ Arduino, IMU Sensor(MPU6050), Motor Driver Module (L293D), BO Motor, Jumpers, Ch
 
 
 # Video Link
-https://drive.google.com/file/d/1FxKM1XTJ2eXsQflOGg-hfRZL7C6VR18y/view?usp=sharing
+https://www.youtube.com/watch?v=TX9Vsmo5vJg
 
 # References
 1. http://www.ti.com/product/L293D
